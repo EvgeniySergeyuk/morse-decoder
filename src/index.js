@@ -37,8 +37,27 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
-function decode(expr) {
-    // write your solution here
+function decode(expr) {    
+    let arrSimbol = expr.match(/.{1,10}/g);
+    let arrMorse = [];    
+    let result = '';   
+    for (let i = 0; i < arrSimbol.length; i++) {
+        if (arrSimbol[i] === '**********') arrMorse.push(' ');
+        else {
+            let Temp = '';
+            for (let j = 0; j < arrSimbol[i].length; j += 2) {
+                let tempChar = arrSimbol[i].slice(j, j + 2);                
+                if (tempChar === '10') Temp += '.';
+                else if (tempChar === '11') Temp += '-';                
+            }
+            arrMorse.push(Temp);
+        }
+    }
+    for (let i = 0; i < arrMorse.length; i++) {  
+        if (arrMorse[i] === ' ') result += ' ';      
+        else result += MORSE_TABLE[arrMorse[i]];        
+    }
+    return result;            
 }
 
 module.exports = {
